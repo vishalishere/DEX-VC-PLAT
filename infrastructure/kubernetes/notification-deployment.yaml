@@ -1,0 +1,81 @@
+# © 2024 DecVCPlat. All rights reserved.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: decvcplat-notification
+  namespace: decvcplat
+  labels:
+    app: decvcplat-notification
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: decvcplat-notification
+  template:
+    metadata:
+      labels:
+        app: decvcplat-notification
+        version: v1
+    spec:
+      containers:
+      - name: decvcplat-notification
+        image: decvcplat/notification:latest
+        ports:
+        - containerPort: 8080
+        - containerPort: 8081
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        - name: DecVCPlat_ConnectionString
+          valueFrom:
+            secretKeyRef:
+              name: decvcplat-db-secret
+              key: connection-string
+        - name: DecVCPlat_JwtSecret
+          valueFrom:
+            secretKeyRef:
+              name: decvcplat-jwt-secret
+              key: jwt-key
+        - name: DecVCPlat_SendGrid_ApiKey
+          valueFrom:
+            secretKeyRef:
+              name: decvcplat-sendgrid-secret
+              key: api-key
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: decvcplat-notification-service
+  namespace: decvcplat
+spec:
+  selector:
+    app: decvcplat-notification
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  - name: https
+    port: 443
+    targetPort: 8081
+  type: ClusterIP

@@ -1,0 +1,81 @@
+# © 2024 DecVCPlat. All rights reserved.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: decvcplat-api-gateway
+  namespace: decvcplat
+  labels:
+    app: decvcplat-api-gateway
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: decvcplat-api-gateway
+  template:
+    metadata:
+      labels:
+        app: decvcplat-api-gateway
+        version: v1
+    spec:
+      containers:
+      - name: decvcplat-api-gateway
+        image: decvcplat/api-gateway:latest
+        ports:
+        - containerPort: 8080
+        - containerPort: 8081
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        - name: DecVCPlat_JwtSecret
+          valueFrom:
+            secretKeyRef:
+              name: decvcplat-jwt-secret
+              key: jwt-key
+        - name: DecVCPlat_UserManagement_Url
+          value: "http://decvcplat-user-management-service"
+        - name: DecVCPlat_ProjectManagement_Url
+          value: "http://decvcplat-project-management-service"
+        - name: DecVCPlat_Voting_Url
+          value: "http://decvcplat-voting-service"
+        - name: DecVCPlat_Funding_Url
+          value: "http://decvcplat-funding-service"
+        - name: DecVCPlat_Notification_Url
+          value: "http://decvcplat-notification-service"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: decvcplat-api-gateway-service
+  namespace: decvcplat
+spec:
+  selector:
+    app: decvcplat-api-gateway
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  - name: https
+    port: 443
+    targetPort: 8081
+  type: LoadBalancer

@@ -1,0 +1,11 @@
+# © 2024 DecVCPlat. All rights reserved.
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: decvcplat
+  labels:
+    name: decvcplat
+    app.kubernetes.io/name: decvcplat
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: kubernetes
