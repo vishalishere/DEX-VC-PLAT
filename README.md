@@ -88,6 +88,7 @@ See the [docs](./docs) directory for detailed documentation on:
 - [Blockchain Integration](./docs/BLOCKCHAIN.md)
 - [Analytics System](./docs/ANALYTICS.md)
 - [Security Features](./docs/SECURITY.md)
+- [Notification System](./docs/NOTIFICATIONS.md)
 
 3. **Start the services**
 
