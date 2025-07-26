@@ -114,7 +114,7 @@ jobs:
         delete-old-comments: true
 
     - name: Upload frontend test results
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v2
       if: always()
       with:
         name: Frontend Jest Tests
@@ -159,7 +159,7 @@ jobs:
         retention-days: 30
 
     - name: Upload E2E test results to GitHub
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v2
       if: always()
       with:
         name: E2E Playwright Tests
