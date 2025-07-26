@@ -1,0 +1,292 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+
+jobs:
+  build-and-publish:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      
+      - name: Restore dependencies
+        run: dotnet restore
+      
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+      
+      - name: Publish API Gateway
+        run: dotnet publish src/Backend/DecVCPlat.ApiGateway/DecVCPlat.ApiGateway.csproj -c Release -o ./publish/api-gateway
+      
+      - name: Publish User Management Service
+        run: dotnet publish src/Backend/DecVCPlat.UserManagement/DecVCPlat.UserManagement.csproj -c Release -o ./publish/user-management
+      
+      - name: Publish Project Management Service
+        run: dotnet publish src/Backend/DecVCPlat.ProjectManagement/DecVCPlat.ProjectManagement.csproj -c Release -o ./publish/project-management
+      
+      - name: Publish Voting Service
+        run: dotnet publish src/Backend/DecVCPlat.Voting/DecVCPlat.Voting.csproj -c Release -o ./publish/voting
+      
+      - name: Publish Funding Service
+        run: dotnet publish src/Backend/DecVCPlat.Funding/DecVCPlat.Funding.csproj -c Release -o ./publish/funding
+      
+      - name: Publish Notification Service
+        run: dotnet publish src/Backend/DecVCPlat.Notification/DecVCPlat.Notification.csproj -c Release -o ./publish/notification
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: './src/Frontend/package-lock.json'
+      
+      - name: Build Frontend
+        run: |
+          cd src/Frontend
+          npm ci
+          npm run build
+      
+      - name: Upload API Gateway Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: api-gateway
+          path: ./publish/api-gateway
+      
+      - name: Upload User Management Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: user-management
+          path: ./publish/user-management
+      
+      - name: Upload Project Management Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: project-management
+          path: ./publish/project-management
+      
+      - name: Upload Voting Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: voting
+          path: ./publish/voting
+      
+      - name: Upload Funding Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: funding
+          path: ./publish/funding
+      
+      - name: Upload Notification Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: notification
+          path: ./publish/notification
+      
+      - name: Upload Frontend Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend
+          path: ./src/Frontend/build
+  
+  deploy-development:
+    name: Deploy to Development
+    needs: build-and-publish
+    if: github.event_name == 'push' || github.event.inputs.environment == 'development'
+    runs-on: ubuntu-latest
+    environment: development
+    
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+      
+      - name: Setup Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Deploy API Gateway to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-api-gateway-dev'
+          package: './api-gateway'
+      
+      - name: Deploy User Management to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-user-management-dev'
+          package: './user-management'
+      
+      - name: Deploy Project Management to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-project-management-dev'
+          package: './project-management'
+      
+      - name: Deploy Voting to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-voting-dev'
+          package: './voting'
+      
+      - name: Deploy Funding to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-funding-dev'
+          package: './funding'
+      
+      - name: Deploy Notification to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-notification-dev'
+          package: './notification'
+      
+      - name: Deploy Frontend to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_DEV }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "./frontend"
+          output_location: ""
+  
+  deploy-staging:
+    name: Deploy to Staging
+    needs: build-and-publish
+    if: github.event.inputs.environment == 'staging'
+    runs-on: ubuntu-latest
+    environment: staging
+    
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+      
+      - name: Setup Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Deploy API Gateway to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-api-gateway-staging'
+          package: './api-gateway'
+      
+      - name: Deploy User Management to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-user-management-staging'
+          package: './user-management'
+      
+      - name: Deploy Project Management to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-project-management-staging'
+          package: './project-management'
+      
+      - name: Deploy Voting to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-voting-staging'
+          package: './voting'
+      
+      - name: Deploy Funding to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-funding-staging'
+          package: './funding'
+      
+      - name: Deploy Notification to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-notification-staging'
+          package: './notification'
+      
+      - name: Deploy Frontend to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_STAGING }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "./frontend"
+          output_location: ""
+  
+  deploy-production:
+    name: Deploy to Production
+    needs: build-and-publish
+    if: github.event.inputs.environment == 'production'
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+      
+      - name: Setup Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Deploy API Gateway to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-api-gateway'
+          package: './api-gateway'
+      
+      - name: Deploy User Management to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-user-management'
+          package: './user-management'
+      
+      - name: Deploy Project Management to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-project-management'
+          package: './project-management'
+      
+      - name: Deploy Voting to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-voting'
+          package: './voting'
+      
+      - name: Deploy Funding to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-funding'
+          package: './funding'
+      
+      - name: Deploy Notification to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'decvcplat-notification'
+          package: './notification'
+      
+      - name: Deploy Frontend to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PROD }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "./frontend"
+          output_location: ""

@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # Development overrides for services
+  
+  # API Gateway with volume mounts for development
+  api-gateway:
+    volumes:
+      - ./src/Backend/DecVCPlat.ApiGateway:/app
+      - ${USERPROFILE}/.nuget/packages:/root/.nuget/packages:ro
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTPS_PORT=5001
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    command: dotnet watch run --urls=http://+:80;https://+:443
+
+  # User Management Service with volume mounts for development
+  user-management:
+    volumes:
+      - ./src/Backend/DecVCPlat.UserManagement:/app
+      - ${USERPROFILE}/.nuget/packages:/root/.nuget/packages:ro
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    command: dotnet watch run
+
+  # Project Management Service with volume mounts for development
+  project-management:
+    volumes:
+      - ./src/Backend/DecVCPlat.ProjectManagement:/app
+      - ${USERPROFILE}/.nuget/packages:/root/.nuget/packages:ro
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    command: dotnet watch run
+
+  # Voting Service with volume mounts for development
+  voting:
+    volumes:
+      - ./src/Backend/DecVCPlat.Voting:/app
+      - ${USERPROFILE}/.nuget/packages:/root/.nuget/packages:ro
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    command: dotnet watch run
+
+  # Funding Service with volume mounts for development
+  funding:
+    volumes:
+      - ./src/Backend/DecVCPlat.Funding:/app
+      - ${USERPROFILE}/.nuget/packages:/root/.nuget/packages:ro
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    command: dotnet watch run
+
+  # Notification Service with volume mounts for development
+  notification:
+    volumes:
+      - ./src/Backend/DecVCPlat.Notification:/app
+      - ${USERPROFILE}/.nuget/packages:/root/.nuget/packages:ro
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    command: dotnet watch run
+
+  # Frontend with hot reloading for development
+  frontend:
+    volumes:
+      - ./src/Frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm start

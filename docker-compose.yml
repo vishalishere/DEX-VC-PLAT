@@ -1,0 +1,137 @@
+version: '3.8'
+
+services:
+  # SQL Server database
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=DecVCPlat_Strong!Password
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - decvcplat-network
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P DecVCPlat_Strong!Password -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./src/Backend/DecVCPlat.ApiGateway
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+      - "5001:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80;https://+:443
+      - UserManagementService__BaseUrl=http://user-management
+      - ProjectManagementService__BaseUrl=http://project-management
+      - VotingService__BaseUrl=http://voting
+      - FundingService__BaseUrl=http://funding
+      - NotificationService__BaseUrl=http://notification
+    depends_on:
+      - sqlserver
+    networks:
+      - decvcplat-network
+
+  # User Management Service
+  user-management:
+    build:
+      context: ./src/Backend/DecVCPlat.UserManagement
+      dockerfile: Dockerfile
+    ports:
+      - "5010:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DecVCPlat_UserManagement;User Id=sa;Password=DecVCPlat_Strong!Password;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+    networks:
+      - decvcplat-network
+
+  # Project Management Service
+  project-management:
+    build:
+      context: ./src/Backend/DecVCPlat.ProjectManagement
+      dockerfile: Dockerfile
+    ports:
+      - "5020:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DecVCPlat_ProjectManagement;User Id=sa;Password=DecVCPlat_Strong!Password;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+    networks:
+      - decvcplat-network
+
+  # Voting Service
+  voting:
+    build:
+      context: ./src/Backend/DecVCPlat.Voting
+      dockerfile: Dockerfile
+    ports:
+      - "5030:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DecVCPlat_Voting;User Id=sa;Password=DecVCPlat_Strong!Password;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+    networks:
+      - decvcplat-network
+
+  # Funding Service
+  funding:
+    build:
+      context: ./src/Backend/DecVCPlat.Funding
+      dockerfile: Dockerfile
+    ports:
+      - "5040:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DecVCPlat_Funding;User Id=sa;Password=DecVCPlat_Strong!Password;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+    networks:
+      - decvcplat-network
+
+  # Notification Service
+  notification:
+    build:
+      context: ./src/Backend/DecVCPlat.Notification
+      dockerfile: Dockerfile
+    ports:
+      - "5050:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DecVCPlat_Notification;User Id=sa;Password=DecVCPlat_Strong!Password;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+    networks:
+      - decvcplat-network
+
+  # Frontend
+  frontend:
+    build:
+      context: ./src/Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000
+    depends_on:
+      - api-gateway
+    networks:
+      - decvcplat-network
+
+networks:
+  decvcplat-network:
+    driver: bridge
+
+volumes:
+  sqlserver_data:
