@@ -7,9 +7,13 @@ using FundingService.API.Data;
 using FundingService.API.Models.DTOs;
 using FundingService.API.Models.Entities;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace FundingService.API.Controllers;
 
+/// <summary>
+/// Controller for managing funding operations in the DecVCPlat platform
+/// </summary>
 [ApiController]
 [Route("api/v1/[controller]")]
 [Produces("application/json")]
@@ -19,14 +23,34 @@ public class FundingController : ControllerBase
     private readonly FundingDbContext _context;
     private readonly ILogger<FundingController> _logger;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FundingController"/> class
+    /// </summary>
+    /// <param name="context">The funding database context</param>
+    /// <param name="logger">The logger</param>
     public FundingController(FundingDbContext context, ILogger<FundingController> logger)
     {
         _context = context;
         _logger = logger;
     }
 
+    /// <summary>
+    /// Creates a new funding tranche for a project milestone
+    /// </summary>
+    /// <param name="request">The tranche creation request</param>
+    /// <returns>The created tranche details</returns>
+    /// <response code="201">Returns the created tranche</response>
+    /// <response code="400">If the request is invalid or tranche already exists</response>
+    /// <response code="401">If the user is not authenticated</response>
+    /// <response code="403">If the user is not authorized</response>
+    /// <response code="500">If there was an internal server error</response>
     [HttpPost("tranches")]
     [Authorize(Policy = "DecVCPlat-Luminary")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<TrancheResponse>> CreateTranche([FromBody] CreateTrancheRequest request)
     {
         try

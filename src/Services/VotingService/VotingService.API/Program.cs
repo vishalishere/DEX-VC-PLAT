@@ -66,8 +66,27 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "DecVCPlat Voting Service API",
         Version = "v1.0",
-        Description = "Decentralized Venture Capital Platform - Voting Service with Token Staking"
+        Description = "Decentralized Venture Capital Platform - Voting Service with Token Staking",
+        Contact = new OpenApiContact
+        {
+            Name = "DecVCPlat Team",
+            Email = "support@decvcplat.com",
+            Url = new Uri("https://github.com/vishalishere/DEX-VC-PLAT")
+        },
+        License = new OpenApiLicense
+        {
+            Name = "MIT License",
+            Url = new Uri("https://opensource.org/licenses/MIT")
+        }
     });
+
+    // Include XML comments for Swagger documentation
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        c.IncludeXmlComments(xmlPath);
+    }
 
     c.AddSecurityDefinition("DecVCPlatBearer", new OpenApiSecurityScheme
     {
