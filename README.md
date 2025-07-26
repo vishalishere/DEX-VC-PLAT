@@ -77,6 +77,18 @@ DecVCPlat follows a microservices architecture with the following components:
    - Build the solution
    - Set up the frontend development environment
 
+## Documentation
+
+See the [docs](./docs) directory for detailed documentation on:
+
+- API Reference
+- Deployment Guide
+- Development Workflow
+- Architecture Overview
+- [Blockchain Integration](./docs/BLOCKCHAIN.md)
+- [Analytics System](./docs/ANALYTICS.md)
+- [Security Features](./docs/SECURITY.md)
+
 3. **Start the services**
 
    Each service can be run independently:
