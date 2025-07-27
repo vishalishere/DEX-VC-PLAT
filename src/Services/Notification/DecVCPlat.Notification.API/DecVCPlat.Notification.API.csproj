@@ -43,6 +43,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\DecVCPlat.Shared\DecVCPlat.Shared.csproj" />
+    <ProjectReference Include="..\..\..\Shared\DecVCPlat.Common.Notifications.New\DecVCPlat.Common.Notifications.New.csproj" />
   </ItemGroup>
 
 </Project>

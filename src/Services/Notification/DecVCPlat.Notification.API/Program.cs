@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
-using DecVCPlat.Common.Notifications;
+using DecVCPlat.Common.Notifications.New;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

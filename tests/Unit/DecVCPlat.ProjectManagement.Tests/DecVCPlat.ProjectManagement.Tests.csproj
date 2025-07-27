@@ -26,7 +26,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
     <PackageReference Include="Moq" Version="4.20.69" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Testing" Version="8.0.0" />
+    <!-- Removed non-existent Microsoft.Extensions.Logging.Testing package -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="AutoFixture" Version="4.18.0" />
     <PackageReference Include="AutoFixture.Xunit2" Version="4.18.0" />

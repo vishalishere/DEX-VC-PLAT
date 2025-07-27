@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.Common\Shared.Common.csproj" />
     <ProjectReference Include="..\..\Shared\Shared.Security\Shared.Security.csproj" />
+    <ProjectReference Include="..\..\..\Shared\DecVCPlat.Common.Notifications.New\DecVCPlat.Common.Notifications.New.csproj" />
   </ItemGroup>
 
 </Project>

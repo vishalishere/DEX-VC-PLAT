@@ -1,0 +1,118 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+
+# Solution Folders
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{11111111-1111-1111-1111-111111111111}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{22222222-2222-2222-2222-222222222222}"
+EndProject
+
+# Unit Test Projects
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.UserManagement.Tests", "Unit\DecVCPlat.UserManagement.Tests\DecVCPlat.UserManagement.Tests.csproj", "{F1E2D3C4-B5A6-9870-1234-567890ABCDEF}"
+EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.ProjectManagement.Tests", "Unit\DecVCPlat.ProjectManagement.Tests\DecVCPlat.ProjectManagement.Tests.csproj", "{H3G4F5E6-D7C8-B109-3456-789012CDEFGH}"
+EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.Voting.Tests", "Unit\DecVCPlat.Voting.Tests\DecVCPlat.Voting.Tests.csproj", "{DD4E5F6G-H8I9-0123-4567-890123DEFGHD}"
+EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.Funding.Tests", "Unit\DecVCPlat.Funding.Tests\DecVCPlat.Funding.Tests.csproj", "{AA1B2C3D-E4F5-6789-0123-456789ABCDEF}"
+EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.Notification.Tests", "Unit\DecVCPlat.Notification.Tests\DecVCPlat.Notification.Tests.csproj", "{BB2C3D4E-F5G6-7890-1234-56789ABCDEFG}"
+EndProject
+
+# Integration Test Projects
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.Integration.Tests", "integration\DecVCPlat.Integration.Tests\DecVCPlat.Integration.Tests.csproj", "{FF6G7H8I-J0K1-2345-6789-012345FGHIJF}"
+EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.UserManagement.IntegrationTests", "integration\DecVCPlat.UserManagement.IntegrationTests\DecVCPlat.UserManagement.IntegrationTests.csproj", "{CC3D4E5F-G6H7-8901-2345-6789ABCDEFGH}"
+EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.ProjectManagement.IntegrationTests", "integration\DecVCPlat.ProjectManagement.IntegrationTests\DecVCPlat.ProjectManagement.IntegrationTests.csproj", "{DD4E5F6G-H7I8-9012-3456-789ABCDEFGHI}"
+EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.Voting.IntegrationTests", "integration\DecVCPlat.Voting.IntegrationTests\DecVCPlat.Voting.IntegrationTests.csproj", "{EE5F6G7H-I8J9-0123-4567-89ABCDEFGHIJ}"
+EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.Funding.IntegrationTests", "integration\DecVCPlat.Funding.IntegrationTests\DecVCPlat.Funding.IntegrationTests.csproj", "{FF6G7H8I-J9K0-1234-5678-9ABCDEFGHIJK}"
+EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecVCPlat.Notification.IntegrationTests", "integration\DecVCPlat.Notification.IntegrationTests\DecVCPlat.Notification.IntegrationTests.csproj", "{GG7H8I9J-K0L1-2345-6789-ABCDEFGHIJKL}"
+EndProject
+
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1E2D3C4-B5A6-9870-1234-567890ABCDEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1E2D3C4-B5A6-9870-1234-567890ABCDEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1E2D3C4-B5A6-9870-1234-567890ABCDEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1E2D3C4-B5A6-9870-1234-567890ABCDEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{H3G4F5E6-D7C8-B109-3456-789012CDEFGH}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{H3G4F5E6-D7C8-B109-3456-789012CDEFGH}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{H3G4F5E6-D7C8-B109-3456-789012CDEFGH}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{H3G4F5E6-D7C8-B109-3456-789012CDEFGH}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD4E5F6G-H8I9-0123-4567-890123DEFGHD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD4E5F6G-H8I9-0123-4567-890123DEFGHD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD4E5F6G-H8I9-0123-4567-890123DEFGHD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD4E5F6G-H8I9-0123-4567-890123DEFGHD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA1B2C3D-E4F5-6789-0123-456789ABCDEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA1B2C3D-E4F5-6789-0123-456789ABCDEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA1B2C3D-E4F5-6789-0123-456789ABCDEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA1B2C3D-E4F5-6789-0123-456789ABCDEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB2C3D4E-F5G6-7890-1234-56789ABCDEFG}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB2C3D4E-F5G6-7890-1234-56789ABCDEFG}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB2C3D4E-F5G6-7890-1234-56789ABCDEFG}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB2C3D4E-F5G6-7890-1234-56789ABCDEFG}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF6G7H8I-J0K1-2345-6789-012345FGHIJF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF6G7H8I-J0K1-2345-6789-012345FGHIJF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF6G7H8I-J0K1-2345-6789-012345FGHIJF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF6G7H8I-J0K1-2345-6789-012345FGHIJF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC3D4E5F-G6H7-8901-2345-6789ABCDEFGH}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC3D4E5F-G6H7-8901-2345-6789ABCDEFGH}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC3D4E5F-G6H7-8901-2345-6789ABCDEFGH}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC3D4E5F-G6H7-8901-2345-6789ABCDEFGH}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD4E5F6G-H7I8-9012-3456-789ABCDEFGHI}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD4E5F6G-H7I8-9012-3456-789ABCDEFGHI}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD4E5F6G-H7I8-9012-3456-789ABCDEFGHI}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD4E5F6G-H7I8-9012-3456-789ABCDEFGHI}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE5F6G7H-I8J9-0123-4567-89ABCDEFGHIJ}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE5F6G7H-I8J9-0123-4567-89ABCDEFGHIJ}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE5F6G7H-I8J9-0123-4567-89ABCDEFGHIJ}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE5F6G7H-I8J9-0123-4567-89ABCDEFGHIJ}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF6G7H8I-J9K0-1234-5678-9ABCDEFGHIJK}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF6G7H8I-J9K0-1234-5678-9ABCDEFGHIJK}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF6G7H8I-J9K0-1234-5678-9ABCDEFGHIJK}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF6G7H8I-J9K0-1234-5678-9ABCDEFGHIJK}.Release|Any CPU.Build.0 = Release|Any CPU
+		{GG7H8I9J-K0L1-2345-6789-ABCDEFGHIJKL}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{GG7H8I9J-K0L1-2345-6789-ABCDEFGHIJKL}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{GG7H8I9J-K0L1-2345-6789-ABCDEFGHIJKL}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{GG7H8I9J-K0L1-2345-6789-ABCDEFGHIJKL}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F1E2D3C4-B5A6-9870-1234-567890ABCDEF} = {11111111-1111-1111-1111-111111111111}
+		{H3G4F5E6-D7C8-B109-3456-789012CDEFGH} = {11111111-1111-1111-1111-111111111111}
+		{DD4E5F6G-H8I9-0123-4567-890123DEFGHD} = {11111111-1111-1111-1111-111111111111}
+		{AA1B2C3D-E4F5-6789-0123-456789ABCDEF} = {11111111-1111-1111-1111-111111111111}
+		{BB2C3D4E-F5G6-7890-1234-56789ABCDEFG} = {11111111-1111-1111-1111-111111111111}
+		{FF6G7H8I-J0K1-2345-6789-012345FGHIJF} = {22222222-2222-2222-2222-222222222222}
+		{CC3D4E5F-G6H7-8901-2345-6789ABCDEFGH} = {22222222-2222-2222-2222-222222222222}
+		{DD4E5F6G-H7I8-9012-3456-789ABCDEFGHI} = {22222222-2222-2222-2222-222222222222}
+		{EE5F6G7H-I8J9-0123-4567-89ABCDEFGHIJ} = {22222222-2222-2222-2222-222222222222}
+		{FF6G7H8I-J9K0-1234-5678-9ABCDEFGHIJK} = {22222222-2222-2222-2222-222222222222}
+		{GG7H8I9J-K0L1-2345-6789-ABCDEFGHIJKL} = {22222222-2222-2222-2222-222222222222}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87654321-4321-4321-4321-876543210987}
+	EndGlobalSection
+EndGlobal
